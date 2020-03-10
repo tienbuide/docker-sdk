@@ -52,7 +52,7 @@ RUN --mount=type=cache,target=/root/.npm \
     --mount=type=bind,from=spryker_app,source=/data/config,target=/data/config,readonly \
     find vendor -name package.json | while read file; do ( \
         cd $(dirname $file); \
-        npm install \
+        npm npm ci --prefer-offline \
     ); done && \
     npm run yves && \
     npm run zed && \
