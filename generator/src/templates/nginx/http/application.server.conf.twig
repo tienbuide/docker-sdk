@@ -1,15 +1,9 @@
 {% extends "nginx/http/server.conf.twig" %}
 {% block locations %}
-    root /data/public/{{ endpointData['entry-point'] }};
-    index index.php;
-
-    if ($request_uri ~* "^(.*/)index\.php(.*)$") {
-        return 301 $1;
-    }
 
 {% include "nginx/http/static.conf.twig" with _context %}
 
-    location ~ \.php$ {
+    location @proxy {
 {% block location %}
         include fastcgi.conf;
         fastcgi_pass {{ upstream }};
